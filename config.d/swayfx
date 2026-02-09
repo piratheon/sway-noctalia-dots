@@ -1,7 +1,5 @@
 # layer blur
-layer_effects "waybar" blur enable; shadows disable;
 layer_effects "gtk-layer-shell" blur enable; shadows enable; corner_radius 13
-layer_effects "wofi" blur enable; shadows enable; corner_radius 13
 layer_effects "avizo" blur enable; corner_radius 15
 # Apply blur to Noctalia
 #layer_effects "noctalia-wallpaper-LVDS-1" blur enable
