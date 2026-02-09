@@ -9,18 +9,10 @@ set $right l
 set $browser $(~/.config/sway/scripts/get-default-browser.sh)
 set $help ~/.config/sway/scripts/swaykeyhints -h 100 -w 200 | wofi -d
 set $term wezterm
-set $term-float floating alacritty
+set $term-float floating wezterm
 set $term-exec -e
-set $term-working-dir $term --working-directory=$( swaymsg -r -t get_tree | jq '.. | (.nodes? // empty)[] | select(.focused == true).pid? // empty' | xargs pstree -p | grep "\<tmux\>\|\<fish\>\|\<bash\>\|\<zsh\>\|\<sh\>" | grep -o '[1-9]*' | xargs pwdx 2> /dev/null | cut -f2- -d' ' | sort | tail -n 1 | tr -d '\n')
-set $launcher nwggrid
-set $powermenu nwgbar
-set $cheat gedit ~/.config/sway/cheatsheet
-set $filemanager kitty -e ranger
+set $filemanager nautilus
 set $colorpiker grim -g "$(slurp -p)" -t ppm - | convert - -format '%[pixel:p{0,0}]' txt:- | tail -n 1 | cut -d ' ' -f 4 | wl-copy 
-set $search_prompt wofi -c ~/.config/wofi/config.screenshot --dmenu
-
-# MENU
-set $menu rofi -show drun -theme ~/.config/rofi/config.rasi
 
 ### Key bindings
 ## reload
@@ -28,13 +20,9 @@ bindsym --to-code  {
    $mod+f1                   reload
 
    $mod+slash               split vertical; exec $term
-   $mod+Shift+slash         split vertical; exec $term-working-dir
    $mod+apostrophe	        split horizontal; exec $term
-   $mod+Shift+apostrophe	  split horizontal; exec $term-working-dir
-
    $mod+Shift+Tab     			workspace next
    $mod+backslash     			workspace back_and_forth
-   alt+Tab           			exec ~/.config/wofi/windows.py
 
    # Start a floating terminal
    $mod+Return        			exec $term
@@ -52,12 +40,10 @@ bindsym --to-code  {
    # $mod+b           splith
 
    # w
-   $mod+w               exec qs -c noctalia-shell ipc call launcher toggle
-   $mod+Shift+w     exec $search_prompt | xargs -I{} $term $term-exec bash -c 'ori {} | glow -w 80 && bash'
-   #exec $search_prompt | xargs -I{} $term $term-exec bash -c 'gigachat {} | glow -w 80 && zsh'
+   $mod+w               exec qs -c noctalia-shell ipc call  toggle
   
    
-   $mod+e               exec ~/.config/sway/scripts/translate.sh ru
+   $mod+e               exec ~/.config/sway/scripts/translate.sh ar
    $mod+Shift+e         exec ~/.config/sway/scripts/translate.sh en
 
    # f
@@ -71,7 +57,7 @@ bindsym --to-code  {
    $mod+n               exec $filemanager
 
    #o
-   $mod+o               exec ~/.config/sway/scripts/audio-record-to-text.sh
+   $mod+o               exec ~/.config/sway/scripts/audio-record.sh
    $mod+Shift+o         exec audio-recorder -c stop
 
    # p
@@ -81,17 +67,12 @@ bindsym --to-code  {
    $mod+q               kill
 
    # s
-   # bindsym --to-code  $mod+s layout stacking
    $mod+s               sticky toggle;
    $mod+Shift+s		   split toggle
 
    # v
-   # bindsym --to-code  $mod+v splitv
    $mod+v               layout tabbed
 
-   # w
-   #$mod+w               exec ~/.config/sway/scripts/browser-search.sh
-   #$mod+Shift+w         exec $search_prompt | xargs -I{} xdg-open https://www.google.com/search\?q\=\{\}
 
    # Prntscrn
    Print			    exec  ~/.config/sway/scripts/screenshot.sh
@@ -203,24 +184,6 @@ bindsym --to-code  $mod+r mode "resize"
 #   $mod+shift+button5 resize grow width 5 px or 5 ppt
 #}
 
-# Volume
-   # bindsym --to-code  XF86AudioRaiseVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
-   # bindsym --to-code  XF86AudioLowerVolume  exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
-   # bindsym --to-code  XF86AudioMute         exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle # mute sound
-
-   #wob
-# bindsym {
-#    XF86AudioRaiseVolume exec pamixer -ui 10 && pamixer --get-volume > $SWAYSOCK.wob
-#    XF86AudioLowerVolume exec pamixer -ud 10  && pamixer --get-volume > $SWAYSOCK.wob
-#    XF86AudioMute exec pamixer --toggle-mute && ( pamixer --get-mute && echo 0 > $SWAYSOCK.wob ) || pamixer --get-volume > $SWAYSOCK.wob
-# }
-# 
-# # Backlight
-#    #wob
-# bindsym {
-#    XF86MonBrightnessUp exec light -A 10 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
-#    XF86MonBrightnessDown exec light -U 10 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob
-# }
 
 bindsym {
     XF86AudioRaiseVolume exec volumectl -u up
@@ -234,8 +197,6 @@ bindsym {
     XF86MonBrightnessDown exec lightctl down
 }
 
-# bindsym --to-code  XF86MonBrightnessUp   exec --no-startup-id $HOME/.config/sway/scripts/bnotif.sh -r
-# bindsym --to-code  XF86MonBrightnessDown exec --no-startup-id $HOME/.config/sway/scripts/bnotif.sh -d
 
 # Player
 bindsym {
