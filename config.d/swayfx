@@ -1,0 +1,27 @@
+# layer blur
+layer_effects "waybar" blur enable; shadows disable;
+layer_effects "gtk-layer-shell" blur enable; shadows enable; corner_radius 13
+layer_effects "wofi" blur enable; shadows enable; corner_radius 13
+layer_effects "avizo" blur enable; corner_radius 15
+# Apply blur to Noctalia
+#layer_effects "noctalia-wallpaper-LVDS-1" blur enable
+#layer_effects "noctalia-desktop-widgets-LVDS-1" blur enable
+##layer_effects "noctalia-bar-content-LVDS-1" blur enable
+##layer_effects "noctalia-dock-peek-LVDS-1" blur enable
+##layer_effects "noctalia-bar-exclusion-LVDS-1" blur enable
+#layer_effects "noctalia-background-LVDS-1" blur enable
+##layer_effects "noctalia-image-cache-renderer" blur enable   
+# vscode blur
+for_window [title="Visual Studio Code"] opacity 0.8
+
+smart_corner_radius enable
+corner_radius 15
+shadows enable
+shadows_on_csd enable
+shadow_blur_radius 20
+
+# blur switches
+blur enable
+blur_xray disable
+blur_passes 4
+blur_radius 4
